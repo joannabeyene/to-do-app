@@ -47,8 +47,8 @@ function finishedTasks(){
             if (loggedUserId == lists[list].user_id) {
                 listMenu.insertAdjacentHTML('beforeend', "<h2 id='"+lists[list].list_id+"'>"+ lists[list].description+"</h2>")
                 for(let task in tasks){
-                    if(lists[list].list_id == tasks[task].list_id && tasks[task].status==false) {
-                        listMenu.insertAdjacentHTML('beforeend', "<li>"+tasks[task].task +"</li>")
+                    if(lists[list].list_id == tasks[task].list_id && tasks[task].status==true) {
+                        listMenu.insertAdjacentHTML('beforeend', "<li class=lidonestyle> <span class=check>&#10004;</span>"+tasks[task].task +"</li>")
                     }
                 }
             }
@@ -63,7 +63,7 @@ function unfinishedTasks(){
     navBar.appendChild(addListButton);
     navBar.appendChild(addTaskButton);
     navBar.appendChild(finishedTasksButton);
-    page.innerHTML=`<h1>Lists with Unfinished Tasks:</h1>`;
+    page.innerHTML=`<h1>Lists with <span class=spanNotDone>NOT DONE</span> Tasks:</h1>`;
     footer.appendChild(logoutButton);
     footer.appendChild(backButton);
     let loggedUserId = localStorage.getItem('userId');
@@ -76,15 +76,13 @@ function unfinishedTasks(){
             if (loggedUserId == lists[list].user_id) {
                 listMenu.insertAdjacentHTML('beforeend', "<h3 id='"+lists[list].list_id+"'>"+"<strong>" + lists[list].description + "</strong>"+"</h3>")
                 for(let task in tasks){
-                    if(lists[list].list_id == tasks[task].list_id && tasks[task].status==true) {
+                    if(lists[list].list_id == tasks[task].list_id && tasks[task].status==false) {
                         let date = new Date(tasks[task].date).toLocaleDateString('sv-SE')
                         let todaysDate = new Date().toLocaleDateString('sv-SE')
                         if(date<todaysDate){
-                            listMenu.insertAdjacentHTML('beforeend', "<li>"+"<strong>"+ 
-                        "<u>"+ tasks[task].task +"</u>"+"</strong>"+ " due date: "+"<span style=color:red>"+date+ "</span>"+" "+"<input type='checkbox' class='done' id='"+tasks[task].task_id+"'/>"+"</li>")
+                            listMenu.insertAdjacentHTML('beforeend', "<li class=listyle>"+ tasks[task].task +"<strong>"+ " due date: "+"</strong>"+"<span style=color:red>"+date+ "</span>"+" "+"<input type='checkbox' class='done' id='"+tasks[task].task_id+"'/>"+"</li>")
                         }else {
-                            listMenu.insertAdjacentHTML('beforeend', "<li>"+"<strong>"+ 
-                        "<u>"+ tasks[task].task +"</u>"+"</strong>"+ "<span>"+" due date: "+date+ "</span>"+" "+"<input type='checkbox' class='done' id='"+tasks[task].task_id+"'/>"+"</li>")
+                            listMenu.insertAdjacentHTML('beforeend', "<li class=listyle>"+ tasks[task].task + "<span>"+"<strong>"+" due date: "+"</strong>"+date+ "</span>"+" "+"<input type='checkbox' class='done' id='"+tasks[task].task_id+"'/>"+"</li>")
                         }
                     }
                 }
@@ -156,13 +154,13 @@ function clear(){
     addTask.value = '';
     dueDate.value = '';
 }
-//**************************ADDEVENTLISTENER**********************************************
+//**************************ADDEVENTLISTENERs**********************************************
 listMenu.addEventListener('click', event =>{
     if (event.target.classList.contains('done')) {
         let clickedDoneButton= event.target.id;
         let updateStatus= {
             task_id: clickedDoneButton,
-            status: 0
+            status: 1
         }
         fetch('http://localhost:3000/tododb/getTasks/update', {
             headers: {
@@ -238,7 +236,7 @@ createTaskButton.addEventListener('click', function(){
         list_id: select.value,
         task: addTask.value,
         date: dueDate.value,
-        status: 1
+        status: 0
     }
     fetch('http://localhost:3000/tododb/getTasks/add', {
         headers: {

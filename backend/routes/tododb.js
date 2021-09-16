@@ -58,7 +58,6 @@ router.get('/getTasks', function(req, res, next) {
         res.json(result);
     })
 });
-
 //UPDATE
 router.post('/getTasks/update', function(req, res, next) { 
     let newStatus=req.body.status

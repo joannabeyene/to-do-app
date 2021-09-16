@@ -36,10 +36,28 @@ main {
 footer {
     margin-top: 20px;
     text-align: center;
+    border-top: solid;
+    padding: 10px 0 10px 0;
 }
 nav button, footer button {
     margin-right: 10px;
 }
 .spanDone {
+    color: rgb(12, 92, 12);
+}
+.spanNotDone{
+    color: rgb(177, 19, 19);
+}
+.listyle {
+    border: 1px solid #000;
+    margin: 0 30% 10px 30%;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+.lidonestyle {
+    margin: 0 30% 10px 30%;
+    list-style-type: none;
+}
+.check {
     color: rgb(12, 92, 12);
 }
