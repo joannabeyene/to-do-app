@@ -1,21 +1,26 @@
 # to-do-app
-Om Appliationen
+**Om Appliationen**
+
 Projektet är en Headless Application och är uppdelat i två mappar, frontend och backend.
 
 Inloggning: user: 'admin', password: 'admin' user: 'lisa', password: 'lisa' user: 'kalle', password: 'kalle'
 
-Frontend
+**Frontend**
+
 start: npm install
 
-Backend
+**Backend**
+
 start: npm install
 
-Databas
+**Databas**
+
 Databasen heter todo och innehåller tre tabeller; lists, tasks och users. De tre tabellerna innehåller foreign keys och relationen mellan dessa tabeller kan hittas i databasdump filen.
 
-Mina tekniska och arkitektoriska beslut:
+**Mina tekniska och arkitektoriska beslut:**
 
-Frontend
+*Frontend*
+
 I min FrontEnd valde jag att skapa en mapp som jag kallade för "modules" med en fil "varibles.js" fil. I den filen skapar jag alla mina globala variabler och importerar de in till min "script.js" fil. Jag valde att inte skapa fler
 filer där jag fördelar mina funktioner då appen fungerar bra som den är nu, och att script.js filen har över 200 rader kod stör mig inte, men vid nästa sprint skulle man kunna separera funktionerna till mindre filer och endast använda sig av script.js filen som en vy fil där funktionerna importeras. 
 
@@ -27,5 +32,6 @@ När en ny task skapas kan man välja ett deadline datum på tasken. Vid list oc
 
 Varje task har en checkbox, när klickar på checkboxen, ändras taskens status till "done" och sedan när man klickar på finished tasks vyn, läggs den tasken till där och försvinner från den andra listan vid omladdning av sidan eller när man
 
-Backend
+*Backend*
+
 Jag valde att bygga upp min backend som en CRUD applikation, minus D(delete) då ta bort en lista/task var ej ett krav så jag valde att skippa skapa en delete query. Dock är detta något som enkelt kan tilläggas i framtiden vid nästa sprint.
