@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: #531625;
+    background-color: #f1e8ea;
+}
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom-style: solid;
+    border-color: #722c3d;
+    padding-bottom: 20px;
+    background-color: #ddcace;
+}
+nav h1{
+    text-align: center;
+}
+nav button {
+    display: inline-block;
+    align-items: center;
+    font-weight: bold;
+    
+}
+button {
+    background-color: #722c3d;
+    color: #fff;
+}
+main {
+    text-align: center;
+    padding-top: 10px;
+}
+.username {
+    color: #c9720f;
+}
+footer {
+    margin-top: 20px;
+    text-align: center;
+}
+nav button, footer button {
+    margin-right: 10px;
+}
+.spanDone {
+    color: rgb(12, 92, 12);
+}
