@@ -24,8 +24,8 @@ function userPage () {
     navBar.appendChild(addTaskButton);
     navBar.appendChild(finishedTasksButton);
     navBar.appendChild(unFinishedTasksButton);
+    navBar.appendChild(logoutButton);
     page.innerHTML= `<h2>Welcome <span class='username'> ${loggedUser}</span> to your page!</h2>`;
-    footer.appendChild(logoutButton);
 }
 //USERPAGE VIEW WITH LISTS OF FINISHED TASKS
 function finishedTasks(){
@@ -35,9 +35,9 @@ function finishedTasks(){
     navBar.appendChild(addListButton);
     navBar.appendChild(addTaskButton);
     navBar.appendChild(unFinishedTasksButton);
+    navBar.appendChild(backButton);
+    navBar.appendChild(logoutButton);
     page.innerHTML=`<h1>Lists with<span class= spanDone> DONE</span> Tasks:</h1>`;
-    footer.appendChild(logoutButton);
-    footer.appendChild(backButton);
     const fetchLists = fetch('http://localhost:3000/tododb/getLists')
     const fetchTasks = fetch('http://localhost:3000/tododb/getTasks')
     Promise.all([fetchLists, fetchTasks]).then(data => {
@@ -63,9 +63,9 @@ function unfinishedTasks(){
     navBar.appendChild(addListButton);
     navBar.appendChild(addTaskButton);
     navBar.appendChild(finishedTasksButton);
+    navBar.appendChild(backButton);
+    navBar.appendChild(logoutButton);
     page.innerHTML=`<h1>Lists with <span class=spanNotDone>NOT DONE</span> Tasks:</h1>`;
-    footer.appendChild(logoutButton);
-    footer.appendChild(backButton);
     let loggedUserId = localStorage.getItem('userId');
     const fetchLists = fetch('http://localhost:3000/tododb/getLists')
     const fetchTasks = fetch('http://localhost:3000/tododb/getTasks')
@@ -98,12 +98,12 @@ function textEditor() {
     navBar.appendChild(addTaskButton);
     navBar.appendChild(unFinishedTasksButton);
     navBar.appendChild(finishedTasksButton);
+    navBar.appendChild(backButton);
+    navBar.appendChild(logoutButton);
     page.innerHTML=`<h1>Create a new List:</h1>`;
     page.appendChild(descriptionLabel);
     page.appendChild(textContent);
     page.appendChild(saveButton);
-    footer.appendChild(logoutButton);
-    footer.appendChild(backButton);
     tinymce.remove();
     tinymce.init({
         selector: '#textContent',
@@ -121,6 +121,8 @@ function addNewTasks(){
     navBar.appendChild(addListButton);
     navBar.appendChild(unFinishedTasksButton);
     navBar.appendChild(finishedTasksButton);
+    navBar.appendChild(backButton);
+    navBar.appendChild(logoutButton);
     page.innerHTML=`<h1>Create new Tasks to your Lists:</h1>`;
     page.appendChild(listLabel);
     page.appendChild(select);
@@ -129,8 +131,6 @@ function addNewTasks(){
     page.appendChild(dateLabel);
     page.appendChild(dueDate);
     page.appendChild(createTaskButton);
-    footer.appendChild(logoutButton);
-    footer.appendChild(backButton);
     fetch('http://localhost:3000/tododb/getLists')
     .then(res=>res.json())
     .then(lists=>{
@@ -146,7 +146,6 @@ function addNewTasks(){
 function clear(){
     navBar.innerHTML = '';
     page.innerHTML = '';
-    footer.innerHTML = '';
     userLogin.value = '';
     passwordLogin.value = '';
     listMenu.innerHTML= '';
@@ -156,7 +155,7 @@ function clear(){
 }
 //**************************ADDEVENTLISTENERs**********************************************
 listMenu.addEventListener('click', event =>{
-    if (event.target.classList.contains('done')) {
+    if (event.target.checked) {
         let clickedDoneButton= event.target.id;
         let updateStatus= {
             task_id: clickedDoneButton,
@@ -238,19 +237,21 @@ createTaskButton.addEventListener('click', function(){
         date: dueDate.value,
         status: 0
     }
-    fetch('http://localhost:3000/tododb/getTasks/add', {
-        headers: {
-        'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(newTask)
-        }).then(res => res.json())
-        .then(data => console.log(data)
-    );
-    page.insertAdjacentHTML('beforeend', "<p>"+addTask.value +" has been added to a list"+"</p>");
-    addTask.value = '';
-    dueDate.value = '';
-    // userPage();
+    if(addTask.value.length != 0)
+    {
+        fetch('http://localhost:3000/tododb/getTasks/add', {
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify(newTask)
+            }).then(res => res.json())
+            .then(data => console.log(data)
+        );
+        page.insertAdjacentHTML('beforeend', "<p>"+addTask.value +" has been added to a list"+"</p>");
+        addTask.value = '';
+        dueDate.value = '';
+    }
 }) 
 //LOGOUT BUTTON, TAKES YOU BACK TO THE LANDING PAGE
 logoutButton.addEventListener('click', function () {
