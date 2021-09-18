@@ -17,7 +17,6 @@ function landingPage () {
 }
 //USERPAGE VIEW WITH LISTS OF UNFINISHED TASKS
 function userPage () {
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
     clear();
     navBar.innerHTML= `<h1>To-do app</h1>`;
     navBar.appendChild(addListButton);
@@ -25,7 +24,10 @@ function userPage () {
     navBar.appendChild(finishedTasksButton);
     navBar.appendChild(unFinishedTasksButton);
     navBar.appendChild(logoutButton);
-    page.innerHTML= `<h2>Welcome <span class='username'> ${loggedUser}</span> to your page!</h2>`;
+    var img = document.createElement('img');
+    img.id= 'image'
+    img.src = 'img/to-do-img.jpg';
+    page.appendChild(img);
 }
 //USERPAGE VIEW WITH LISTS OF FINISHED TASKS
 function finishedTasks(){
@@ -184,7 +186,6 @@ loginButton.addEventListener('click', function () {
         for(let i in users) {
             if (loginUser.user == users[i].user && loginUser.password == users[i].password) {
                 localStorage.setItem('userId', JSON.stringify(users[i].user_id));
-                localStorage.setItem('user', JSON.stringify(users[i].user));
                 userPage();
             }
         }
